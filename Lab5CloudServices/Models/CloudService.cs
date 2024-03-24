@@ -2,21 +2,16 @@
 {
     public class CloudService
     {
-        public static String[] InstanceSizeDescription
+        public static Dictionary<string, double> InstanceSizePrices = new Dictionary<string, double>
         {
-            get
-            {
-                return new String[] {"Very Small", "Small", "Medium", "Large", "Very Large", "A6", "A7"};
-            }
-        }
-
-        public static double[] InstanceSizePrices
-        {
-            get
-            {
-                return new double[] {0.02, 0.08, 0.16, 0.32, 0.64, 0.90, 1.80};
-            }
-        }
+            { "Very Small", 0.02 },
+            { "Small", 0.08 },
+            { "Medium", 0.16 },
+            { "Large", 0.32 },
+            { "Very Large", 0.64 },
+            { "A6", 0.90 },
+            { "A7", 1.80 }
+        };
 
         public int NoInstances { get; set; }
 
@@ -26,17 +21,12 @@
         {
             get
             {
-                int size = 0;
-                for (int i = 0; i < InstanceSizeDescription.Length; i++)
+                if (!InstanceSizePrices.ContainsKey(this.InstanceSize))
                 {
-                    if (InstanceSizeDescription[i] == this.InstanceSize)
-                    {
-                        size = i;
-                        break;
-                    }
+                    throw new ArgumentException("Instance is not found in prices");
                 }
 
-                double hourlyPrice = NoInstances * InstanceSizePrices[size];
+                double hourlyPrice = NoInstances * InstanceSizePrices[this.InstanceSize];
                 double dailyPrice = hourlyPrice * 24;
                 double yearlyPrice;
 

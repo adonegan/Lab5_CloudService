@@ -10,8 +10,8 @@ namespace Lab5CloudServices.Controllers
         // GET: CloudServiceController
         public ActionResult Calculate()
         {
-            ViewBag.InstanceSize = new SelectList(CloudService.InstanceSizeDescription);
-            return View(new CloudService() { NoInstances=2 });
+            ViewBag.InstanceSize = new SelectList(CloudService.InstanceSizePrices.Keys);
+            return View(new CloudService());
         }
 
         // GET: CloudServiceController/Details/5
@@ -24,7 +24,7 @@ namespace Lab5CloudServices.Controllers
             } 
             else
             {
-                ViewBag.InstanceSize = new SelectList(CloudService.InstanceSizeDescription);
+                ViewBag.InstanceSize = new SelectList(CloudService.InstanceSizePrices);
                 return View();
             }
             
